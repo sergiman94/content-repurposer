@@ -1,0 +1,19 @@
+Welcome to today's episode. We're going to talk about something that I think is really transforming how teams work: AI-assisted development tools.
+
+So let me start with a bold claim. In the next two years, every software team will have AI as a core part of their workflow. Not as a novelty, not as a side experiment, but as a fundamental tool like Git or CI/CD.
+
+Here's what I'm seeing in practice. Teams that adopt AI coding assistants are shipping 30 to 40 percent faster. And it's not because the AI writes perfect code. It's because it eliminates the friction in the boring parts: boilerplate, test scaffolding, documentation, code reviews for style issues.
+
+The interesting thing is where AI struggles. It's terrible at architecture decisions. It doesn't understand your business context. It can't tell you whether to use a monolith or microservices for your specific team and product. That's still a deeply human skill.
+
+I spoke with a CTO last week who said something interesting. She said "We stopped thinking of AI as a replacement and started thinking of it as a multiplier. Our senior engineers are now 3x more productive because they spend zero time on boilerplate. Our junior engineers learn faster because they can ask the AI to explain code patterns."
+
+That's the key insight. AI doesn't replace developers. It changes what developers spend their time on. Less time writing CRUD endpoints. More time on system design, user experience, and solving novel problems.
+
+But there's a risk here too. If junior developers never learn to write boilerplate from scratch, do they develop the muscle memory for debugging it when things go wrong? I don't have a definitive answer, but I think the best teams are being intentional about this. They use AI as a teaching tool, not a crutch.
+
+Let me give you three concrete recommendations. First, start with code reviews. Have AI do a first pass for style and obvious bugs, then humans review for architecture and business logic. Second, use AI for test generation. Writing tests is where most teams cut corners, and AI is genuinely good at generating comprehensive test cases. Third, documentation. Nobody likes writing docs. AI can draft them from your code, and you just review and refine.
+
+The bottom line is this: AI coding tools are not the future. They're the present. The teams that figure out how to integrate them thoughtfully will have a massive competitive advantage. The ones that ignore them or adopt them carelessly will fall behind.
+
+Thanks for listening. If you found this valuable, share it with your engineering team. And if you want to go deeper, check out our previous episode on building effective AI workflows.
