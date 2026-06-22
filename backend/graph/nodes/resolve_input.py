@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+import os
+
 from backend.graph.state import RepurposeState
+from backend.services.media import download_youtube_audio, extract_audio_from_video
 
 
 def resolve_input(state: RepurposeState) -> dict:
@@ -14,6 +17,7 @@ def resolve_input(state: RepurposeState) -> dict:
     updates: dict = {"current_step": "resolve_input"}
     raw = state["raw_input"]
     input_type = state["input_type"]
+    job_id = state.get("job_id", "unknown")
 
     try:
         if input_type == "text":
@@ -23,16 +27,21 @@ def resolve_input(state: RepurposeState) -> dict:
             updates["transcript"] = raw
 
         elif input_type in ("youtube_url", "vimeo_url"):
-            # Phase 3: download via yt-dlp
-            updates["error"] = "YouTube/Vimeo download not yet implemented"
+            audio_path = download_youtube_audio(raw, job_id)
+            updates["audio_path"] = audio_path
 
         elif input_type == "video":
-            # Phase 3: extract audio via ffmpeg
-            updates["error"] = "Video processing not yet implemented"
+            if not os.path.isfile(raw):
+                updates["error"] = f"Video file not found: {raw}"
+                return updates
+            audio_path = extract_audio_from_video(raw, job_id)
+            updates["audio_path"] = audio_path
 
         elif input_type == "audio":
-            # Phase 3: validate audio file exists
-            updates["error"] = "Audio processing not yet implemented"
+            if not os.path.isfile(raw):
+                updates["error"] = f"Audio file not found: {raw}"
+                return updates
+            updates["audio_path"] = raw
 
         else:
             updates["error"] = f"Unknown input type: {input_type}"

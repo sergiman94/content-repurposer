@@ -27,16 +27,6 @@ class TestResolveInput:
         assert "error" in result
         assert "too short" in result["error"]
 
-    def test_youtube_not_yet_implemented(self):
-        state = {
-            "job_id": "test-3",
-            "input_type": "youtube_url",
-            "raw_input": "https://youtube.com/watch?v=abc",
-        }
-        result = resolve_input(state)
-        assert "error" in result
-        assert "not yet implemented" in result["error"]
-
     def test_unknown_input_type(self):
         state = {
             "job_id": "test-4",
