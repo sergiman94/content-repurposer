@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { getJob, JobDetail } from "@/lib/api";
+import { getJob, retryJob, JobDetail } from "@/lib/api";
 import JobProgress from "@/components/JobProgress";
 import OutputCard from "@/components/OutputCard";
 import CopyButton from "@/components/CopyButton";
@@ -109,10 +109,13 @@ export default function JobPage() {
           <h2 className="font-semibold text-red-700 mb-2">Processing Failed</h2>
           <p className="text-red-600 text-sm">{job.error}</p>
           <button
-            onClick={() => router.push("/")}
+            onClick={async () => {
+              await retryJob(jobId);
+              setJob((prev) => prev ? { ...prev, status: "pending", error: null } : prev);
+            }}
             className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 text-sm"
           >
-            Try Again
+            Retry This Job
           </button>
         </div>
       )}

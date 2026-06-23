@@ -86,6 +86,17 @@ export async function listJobs(
   return res.json();
 }
 
+export async function retryJob(jobId: string): Promise<{ job_id: string }> {
+  const res = await fetch(`${API_BASE}/api/jobs/${jobId}/retry`, {
+    method: "POST",
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.detail || "Failed to retry job");
+  }
+  return res.json();
+}
+
 export async function deleteJob(jobId: string): Promise<void> {
   const res = await fetch(`${API_BASE}/api/jobs/${jobId}`, {
     method: "DELETE",

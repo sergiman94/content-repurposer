@@ -18,7 +18,7 @@ from backend.api.schemas import (
     JobStatus,
     TokenSummary,
 )
-from backend.db.database import create_job, delete_job, get_job, list_jobs
+from backend.db.database import create_job, delete_job, get_job, list_jobs, update_job_status
 
 router = APIRouter(prefix="/api/jobs", tags=["jobs"])
 
@@ -158,6 +158,25 @@ async def list_jobs_endpoint(limit: int = 20, offset: int = 0):
         )
         for j in jobs
     ]
+
+
+@router.post("/{job_id}/retry", response_model=CreateJobResponse)
+async def retry_job_endpoint(job_id: str):
+    """Retry a failed job."""
+    job = get_job(job_id)
+    if not job:
+        raise HTTPException(status_code=404, detail="Job not found")
+    if job["status"] not in ("failed",):
+        raise HTTPException(status_code=400, detail="Only failed jobs can be retried")
+
+    update_job_status(job_id, "pending", error=None)
+    _try_dispatch(job_id)
+
+    return CreateJobResponse(
+        job_id=job_id,
+        status=JobStatus.PENDING,
+        message="Job requeued for processing",
+    )
 
 
 @router.delete("/{job_id}")
